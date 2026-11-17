@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenYo — Truy xuất Nguồn gốc Sữa chua Đậu nành rau An Giang</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Supabase JS SDK v2 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#FAFAF5] text-[#1E293B] antialiased">
+
+    <!-- 1. CORPORATE STICKY NAVBAR -->
+    <header class="glass-nav sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-[#14532D] flex items-center justify-center text-white font-bold text-xl shadow-md">GY</div>
+                    <div>
+                        <span class="text-xl font-extrabold text-[#14532D] tracking-tight">GreenYo</span>
+                        <span class="hidden sm:inline-block ml-2 text-xs font-semibold px-2 py-0.5 rounded-full bg-[#F0FDF4] text-[#16A34A] border border-[#16A34A]/20">Chuẩn Food-Tech</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <a href="#hero" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-[#1E293B] hover:text-[#16A34A] transition">Trang chủ</a>
+                    <a href="#traceability" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-[#1E293B] hover:text-[#16A34A] transition">Truy xuất</a>
+                    <a href="#story" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-[#1E293B] hover:text-[#16A34A] transition">Câu chuyện</a>
+                    <a href="#process" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-[#1E293B] hover:text-[#16A34A] transition">Quy trình</a>
+                    <a href="#reviews" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-[#1E293B] hover:text-[#16A34A] transition">Đánh giá</a>
+                </nav>
+
+                <!-- Right Actions: Google Login & QR Link -->
+                <div class="flex items-center space-x-2">
+                    <div id="auth-container">
+                        <button id="login-google-btn" class="flex items-center space-x-2 bg-white border border-[#E2E8F0] hover:border-[#16A34A] px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#1E293B] shadow-sm transition">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.14C3.17 21.36 7.28 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.25c-.25-.72-.38-1.49-.38-2.25s.13-1.53.38-2.25V6.61H1.2C.44 8.14 0 9.87 0 11.75s.44 3.61 1.2 5.14l4.08-2.64z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.28 0 3.17 2.64 1.2 6.61l4.08 3.14c.95-2.84 3.6-4.95 6.72-4.95z"/></svg>
+                            <span class="hidden sm:inline">Đăng nhập Google</span>
+                            <span class="sm:hidden">Đăng nhập</span>
+                        </button>
+                    </div>
+                    <a href="qr.html" target="_blank" class="hidden sm:flex items-center space-x-1.5 bg-[#14532D] hover:bg-[#16A34A] text-white px-3.5 py-2 rounded-xl text-sm font-semibold shadow-md transition">
+                        <i data-lucide="qr-code" class="w-4 h-4"></i>
+                        <span>Mã QR</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Mobile Sub-Navbar Links -->
+            <div class="md:hidden flex items-center justify-around py-2.5 border-t border-[#E2E8F0]/60 text-xs font-medium text-[#64748B]">
+                <a href="#hero" class="hover:text-[#16A34A]">Trang chủ</a>
+                <a href="#traceability" class="hover:text-[#16A34A]">Truy xuất</a>
+                <a href="#story" class="hover:text-[#16A34A]">Câu chuyện</a>
+                <a href="#process" class="hover:text-[#16A34A]">Quy trình</a>
+                <a href="#reviews" class="hover:text-[#16A34A]">Đánh giá</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section id="hero" class="relative py-12 lg:py-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Text Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#F0FDF4] text-[#16A34A] text-xs font-bold border border-[#16A34A]/20">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        <span>Sản phẩm Khởi nghiệp Sáng tạo An Giang 2026</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#14532D] tracking-tight leading-tight">
+                        Sữa chua lên men từ <span class="text-[#16A34A]">đậu nành rau</span> vùng lũ An Giang
+                    </h1>
+                    <p class="text-base sm:text-lg text-[#64748B] max-w-2xl mx-auto lg:mx-0">
+                        Giải pháp dinh dưỡng thực vật thanh khiết, kết hợp công nghệ lên men vi sinh chuẩn mực. Minh bạch tuyệt đối từ ruộng đậu phù sa đến tay người tiêu dùng.
+                    </p>
+                    <!-- Badges -->
+                    <div id="hero-badges" class="flex flex-wrap justify-center lg:justify-start gap-2.5 pt-2">
+                        <!-- Render dynamically from content-data.js -->
+                    </div>
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#traceability" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-[#14532D] hover:bg-[#16A34A] text-white px-6 py-3.5 rounded-xl font-bold shadow-lg transition">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                            <span>Xem Hồ sơ Truy xuất</span>
+                        </a>
+                        <a href="#reviews" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white hover:bg-gray-50 border border-[#E2E8F0] text-[#1E293B] px-6 py-3.5 rounded-xl font-bold shadow-sm transition">
+                            <i data-lucide="message-square" class="w-5 h-5 text-[#16A34A]"></i>
+                            <span>Gửi Đánh giá Ngay</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Product Card -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="w-full max-w-sm soft-card rounded-3xl p-6 relative overflow-hidden text-center bg-gradient-to-b from-white to-[#F0FDF4]/30">
+                        <div class="absolute top-4 right-4 bg-[#D97706] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            Chỉ 6.000đ / Hũ 65ml
+                        </div>
+                        <div class="w-48 h-48 mx-auto my-6 rounded-2xl bg-[#14532D]/10 flex items-center justify-center border border-[#14532D]/20 shadow-inner">
+                            <i data-lucide="cup-soda" class="w-24 h-24 text-[#14532D]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#14532D]">GreenYo Edamame Yogurt</h3>
+                        <p class="text-sm text-[#64748B] mt-1">Quy cách hũ nhựa cao cấp định lượng 65ml</p>
+                        <div class="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center justify-between text-xs font-semibold text-[#16A34A]">
+                            <span class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 mr-1"></i> pH Chuẩn 4.5–4.6</span>
+                            <span class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 mr-1"></i> Bảo quản 2–6°C</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TRACEABILITY PASSPORT (HỒ SƠ TRUY XUẤT 4 NHÓM) -->
+    <section id="traceability" class="py-16 bg-white border-y border-[#E2E8F0]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <span class="text-xs font-bold tracking-widest uppercase text-[#16A34A]">Minh bạch QR Code</span>
+                <h2 class="text-3xl font-extrabold text-[#14532D]">Hồ sơ Truy xuất Nguồn gốc Điện tử</h2>
+                <p class="text-base text-[#64748B]">Mọi thông số về nguồn gốc, quy chuẩn sản xuất và kiểm định chất lượng được công khai minh bạch qua 01 Mã QR duy nhất.</p>
+            </div>
+            <!-- Grid 4 Nhóm -->
+            <div id="traceability-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically injected from content-data.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. STORY & ESG -->
+    <section id="story" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-xs font-bold tracking-widest uppercase text-[#D97706]">Câu chuyện Dự án</span>
+                    <h2 id="story-heading" class="text-3xl font-extrabold text-[#14532D] leading-tight"></h2>
+                    <div id="story-paras" class="space-y-4 text-base text-[#64748B]">
+                        <!-- Injected -->
+                    </div>
+                </div>
+                <div class="lg:col-span-6 space-y-4" id="esg-cards">
+                    <!-- Injected ESG Cards -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. PRODUCT & 6-STEP PROCESS -->
+    <section id="process" class="py-16 bg-white border-y border-[#E2E8F0]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <span class="text-xs font-bold tracking-widest uppercase text-[#16A34A]">Khoa học & Kỹ thuật</span>
+                <h2 class="text-3xl font-extrabold text-[#14532D]">Quy trình Chế biến Sạch 6 Bước</h2>
+                <p class="text-base text-[#64748B]">Chạm vào từng bước để xem chi tiết thông số kỹ thuật kiểm soát chất lượng chuẩn doanh nghiệp.</p>
+            </div>
+            <!-- Accordion Process List -->
+            <div id="process-accordion" class="max-w-3xl mx-auto space-y-4">
+                <!-- Injected -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. REVIEWS & SUPABASE REALTIME FEEDBACK -->
+    <section id="reviews" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <span class="text-xs font-bold tracking-widest uppercase text-[#16A34A]">Social Proof</span>
+                <h2 class="text-3xl font-extrabold text-[#14532D]">Đánh giá từ Khách hàng & Ban Giám khảo</h2>
+                <p class="text-base text-[#64748B]">Đăng nhập tài khoản Google để chia sẻ cảm nhận thực tế về hương vị sữa chua GreenYo.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Summary Card & Submission Form -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Average Rating Box -->
+                    <div class="soft-card rounded-2xl p-6 text-center">
+                        <div class="text-4xl font-extrabold text-[#14532D]" id="avg-rating-val">5.0</div>
+                        <div class="flex justify-center space-x-1 my-2 text-[#D97706]" id="avg-stars">
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        </div>
+                        <p class="text-xs text-[#64748B]" id="total-reviews-count">Dựa trên các lượt đánh giá xác thực</p>
+                    </div>
+
+                    <!-- Review Form Box -->
+                    <div class="soft-card rounded-2xl p-6" id="review-form-card">
+                        <div id="login-prompt" class="text-center py-6 space-y-4">
+                            <p class="text-sm text-[#64748B]">Bạn cần đăng nhập tài khoản Google để gửi đánh giá và nhận xét.</p>
+                            <button id="form-login-btn" class="inline-flex items-center space-x-2 bg-[#14532D] hover:bg-[#16A34A] text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow transition">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#fff" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.14C3.17 21.36 7.28 24 12 24z"/></svg>
+                                <span>Đăng nhập Google ngay</span>
+                            </button>
+                        </div>
+
+                        <form id="review-form" class="hidden space-y-4">
+                            <div class="flex items-center space-x-3 pb-3 border-b border-[#E2E8F0]">
+                                <img id="user-avatar-preview" src="" alt="Avatar" class="w-10 h-10 rounded-full border">
+                                <div>
+                                    <h4 id="user-name-preview" class="text-sm font-bold text-[#1E293B]"></h4>
+                                    <span class="text-xs text-[#16A34A]">Đã xác thực Google</span>
+                                </div>
+                            </div>
+                            <!-- Star Selector -->
+                            <div>
+                                <label class="block text-xs font-semibold text-[#64748B] mb-1.5">Chất lượng sản phẩm (Chọn số sao)</label>
+                                <div class="flex space-x-2" id="star-picker">
+                                    <button type="button" data-rating="1" class="star-btn text-gray-300 hover:text-[#D97706]"><i data-lucide="star" class="w-6 h-6 fill-current"></i></button>
+                                    <button type="button" data-rating="2" class="star-btn text-gray-300 hover:text-[#D97706]"><i data-lucide="star" class="w-6 h-6 fill-current"></i></button>
+                                    <button type="button" data-rating="3" class="star-btn text-gray-300 hover:text-[#D97706]"><i data-lucide="star" class="w-6 h-6 fill-current"></i></button>
+                                    <button type="button" data-rating="4" class="star-btn text-gray-300 hover:text-[#D97706]"><i data-lucide="star" class="w-6 h-6 fill-current"></i></button>
+                                    <button type="button" data-rating="5" class="star-btn text-[#D97706]"><i data-lucide="star" class="w-6 h-6 fill-current"></i></button>
+                                </div>
+                                <input type="hidden" id="selected-rating" value="5">
+                            </div>
+                            <!-- Quick Tags -->
+                            <div>
+                                <label class="block text-xs font-semibold text-[#64748B] mb-1.5">Thẻ cảm nhận nhanh</label>
+                                <div class="flex flex-wrap gap-2" id="quick-tags-container">
+                                    <button type="button" class="tag-chip px-3 py-1 rounded-lg text-xs font-medium border border-[#E2E8F0] hover:border-[#16A34A] text-[#64748B] transition" data-tag="Vị thanh mát">Vị thanh mát</button>
+                                    <button type="button" class="tag-chip px-3 py-1 rounded-lg text-xs font-medium border border-[#E2E8F0] hover:border-[#16A34A] text-[#64748B] transition" data-tag="Không hăng">Không hăng</button>
+                                    <button type="button" class="tag-chip px-3 py-1 rounded-lg text-xs font-medium border border-[#E2E8F0] hover:border-[#16A34A] text-[#64748B] transition" data-tag="Đóng gói đẹp">Đóng gói đẹp</button>
+                                    <button type="button" class="tag-chip px-3 py-1 rounded-lg text-xs font-medium border border-[#E2E8F0] hover:border-[#16A34A] text-[#64748B] transition" data-tag="Rất tốt sức khỏe">Rất tốt sức khỏe</button>
+                                </div>
+                            </div>
+                            <!-- Comment Textarea -->
+                            <div>
+                                <label class="block text-xs font-semibold text-[#64748B] mb-1.5">Lời nhận xét chi tiết</label>
+                                <textarea id="review-comment" rows="3" class="w-full rounded-xl border border-[#E2E8F0] p-3 text-sm focus:ring-2 focus:ring-[#16A34A] focus:outline-none" placeholder="Chia sẻ cảm nhận của bạn về sữa chua GreenYo..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-[#14532D] hover:bg-[#16A34A] text-white py-3 rounded-xl font-bold text-sm shadow transition">
+                                Gửi Đánh giá Ngay
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Reviews List Container -->
+                <div class="lg:col-span-7 space-y-4" id="reviews-list">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER -->
+    <footer class="bg-[#14532D] text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-white text-[#14532D] flex items-center justify-center font-bold">GY</div>
+                        <span class="text-lg font-bold">Dự án GreenYo</span>
+                    </div>
+                    <p class="text-xs text-gray-300">Sữa chua lên men từ đậu nành rau vùng lũ An Giang.<br>Trường THPT Chuyên Thoại Ngọc Hầu, tỉnh An Giang.</p>
+                </div>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" id="link-zalo" class="p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition"><i data-lucide="message-circle" class="w-5 h-5"></i></a>
+                    <a href="#" id="link-fb" class="p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition"><i data-lucide="globe" class="w-5 h-5"></i></a>
+                    <a href="#" id="link-tiktok" class="p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition"><i data-lucide="video" class="w-5 h-5"></i></a>
+                </div>
+                <div class="text-center md:text-right space-y-3">
+                    <a href="qr.html" target="_blank" class="inline-flex items-center space-x-2 bg-white text-[#14532D] hover:bg-[#F0FDF4] px-4 py-2.5 rounded-xl font-bold text-sm shadow transition">
+                        <i data-lucide="qr-code" class="w-4 h-4"></i>
+                        <span>Xuất Mã QR Chính thức</span>
+                    </a>
+                    <p class="text-xs text-gray-400">© 2026 GreenYo Project. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/content-data.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

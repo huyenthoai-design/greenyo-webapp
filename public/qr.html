@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xuất Mã QR Chính thức — GreenYo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- QRCode.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#FAFAF5] text-[#1E293B] min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="glass-nav py-4 px-6 flex justify-between items-center shadow-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-[#14532D] flex items-center justify-center text-white font-bold text-lg">GY</div>
+            <span class="font-extrabold text-[#14532D] text-lg">Hệ thống Công cụ QR GreenYo</span>
+        </div>
+        <a href="index.html" class="inline-flex items-center space-x-1.5 text-sm font-semibold text-[#16A34A] hover:underline">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Quay lại Trang chủ</span>
+        </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-12 px-4 flex-grow flex items-center justify-center">
+        <div class="max-w-md w-full soft-card rounded-3xl p-8 text-center space-y-6 bg-white shadow-xl">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#F0FDF4] text-[#16A34A] text-xs font-bold border border-[#16A34A]/20">
+                <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
+                <span>Cơ chế 01 Mã QR Duy nhất (Master QR)</span>
+            </div>
+            
+            <h1 class="text-2xl font-extrabold text-[#14532D]">Tem Nhãn Mã QR Sản phẩm</h1>
+            <p class="text-sm text-[#64748B]">Mã QR tự động liên kết đến địa chỉ trang web chính thức của dự án GreenYo. Dùng để in ấn trực tiếp lên nhãn hũ 65ml.</p>
+
+            <!-- QR Container Card -->
+            <div class="p-6 bg-[#FAFAF5] rounded-2xl border border-[#E2E8F0] inline-block shadow-inner">
+                <div id="qrcode" class="flex justify-center items-center"></div>
+                <div class="mt-3 text-xs font-mono font-bold text-[#14532D]" id="qr-url-display">https://greenyo.onrender.com</div>
+            </div>
+
+            <!-- Download Button -->
+            <button id="download-qr-btn" class="w-full bg-[#14532D] hover:bg-[#16A34A] text-white py-3.5 rounded-xl font-bold text-sm shadow-lg flex items-center justify-center space-x-2 transition">
+                <i data-lucide="download" class="w-5 h-5"></i>
+                <span>Tải ảnh Mã QR (PNG)</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-[#64748B]">
+        Dự án Khởi nghiệp GreenYo • Trường THPT Chuyên Thoại Ngọc Hầu, An Giang
+    </footer>
+
+    <!-- Script tạo QR -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // Lấy URL gốc hiện tại của trang web (hoặc fallback về domain production)
+            const targetUrl = window.location.origin + "/index.html";
+            document.getElementById('qr-url-display').textContent = targetUrl;
+
+            // Render mã QR bằng QRCode.js
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = ""; // Xóa sạch cũ nếu có
+            const qr = new QRCode(qrContainer, {
+                text: targetUrl,
+                width: 200,
+                height: 200,
+                colorDark: "#14532D",
+                colorLight: "#FAFAF5",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // Xử lý tải ảnh PNG
+            document.getElementById('download-qr-btn').addEventListener('click', () => {
+                const canvas = qrContainer.querySelector('canvas');
+                if (canvas) {
+                    const imageURL = canvas.toDataURL('image/png');
+                    const a = document.createElement('a');
+                    a.href = imageURL;
+                    a.download = 'GreenYo-Master-QR.png';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                } else {
+                    alert('Đang khởi tạo mã QR, vui lòng thử lại sau 1 giây!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
