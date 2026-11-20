@@ -1,51 +1,104 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 
 :root {
     --primary-dark: #14532D;
     --primary-brand: #16A34A;
-    --canvas-bg: #FAFAF5;
-    --card-bg: #FFFFFF;
+    --primary-bright: #22C55E;
     --accent-gold: #D97706;
-    --text-main: #1E293B;
-    --text-muted: #64748B;
-    --border-color: #E2E8F0;
+    --text-main: #0F172A;
+    --text-muted: #475569;
+    --border-color: rgba(22, 163, 74, 0.18);
 }
 
 body {
-    font-family: 'Inter', sans-serif, sans-serif;
-    background-color: var(--canvas-bg);
+    font-family: 'Inter', sans-serif;
+    background-color: #F4FBF6;
     color: var(--text-main);
     overflow-x: hidden;
+    transition: background-color 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* Hiệu ứng kính mờ Navbar */
-.glass-nav {
-    background: rgba(250, 250, 245, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-color);
+/* Quầng sáng sinh học tạo chiều sâu */
+.glow-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
 }
 
-/* Đổ bóng mềm đa tầng */
+/* Navbar kính mờ viền sáng */
+.glass-nav {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(22, 163, 74, 0.16);
+    box-shadow: 0 4px 24px -4px rgba(20, 83, 45, 0.06);
+}
+
+/* Thẻ nội dung nổi khối + ánh sáng viền khi hover */
 .soft-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 20px -2px rgba(20, 83, 45, 0.05);
-    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(22, 163, 74, 0.16);
+    box-shadow: 0 12px 32px -6px rgba(20, 83, 45, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .soft-card:hover {
-    box-shadow: 0 10px 25px -5px rgba(20, 83, 45, 0.1);
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    border-color: rgba(34, 197, 94, 0.48);
+    box-shadow: 0 20px 40px -10px rgba(22, 163, 74, 0.18), 0 0 24px rgba(34, 197, 94, 0.12);
 }
 
-/* Active Nav Link */
-.nav-link.active {
-    color: #16A34A;
-    background-color: #F0FDF4;
-    font-weight: 600;
+/* Nút bấm chính Gradient phát sáng */
+.btn-glow {
+    background: linear-gradient(135deg, #14532D 0%, #16A34A 60%, #22C55E 100%);
+    color: #FFFFFF;
+    box-shadow: 0 10px 25px -5px rgba(22, 163, 74, 0.42);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.btn-glow:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow: 0 16px 32px -6px rgba(22, 163, 74, 0.55);
+}
+
+/* Tab điều hướng Active trên Navbar */
+.nav-tab.active {
+    background: linear-gradient(135deg, #14532D 0%, #16A34A 100%);
+    color: #FFFFFF;
+    box-shadow: 0 6px 16px -3px rgba(22, 163, 74, 0.4);
+}
+
+/* Hiệu ứng Scroll Reveal trượt lên */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+
+/* Modal Backdrop & Dialog mượt mà */
+.modal-backdrop {
+    background: rgba(15, 23, 42, 0.62);
+    backdrop-filter: blur(6px);
+    transition: opacity 0.25s ease;
+}
+
+.modal-panel {
+    box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.35), 0 0 32px rgba(34, 197, 94, 0.15);
 }

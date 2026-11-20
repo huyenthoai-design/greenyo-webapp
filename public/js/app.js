@@ -1,108 +1,138 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Khởi tạo Lucide Icons
-    lucide.createIcons();
-
-    // Nạp dữ liệu từ content-data.js ra trang chủ index.html
-    renderContentData();
-
-    // Kích hoạt tương tác
+    resolveBrandAssets();
+    renderPageContent();
     initStarPicker();
     initTagSelector();
-    initScrollspy();
+    initScrollReveal();
+    initAmbientBackgroundTransitions();
+    lucide.createIcons();
 });
 
-function renderContentData() {
+// Tự động dò định dạng file ảnh thật (logo.png / logo.jpg / logo / product.jpg / IMG_1168.jpg)
+function resolveBrandAssets() {
+    const logoCandidates = ['images/logo.png', 'images/logo.jpg', 'images/logo.jpeg', 'images/logo.webp', 'images/logo'];
+    document.querySelectorAll('img[data-brand-logo]').forEach(img => {
+        let attempt = 0;
+        const tryNextLogo = () => {
+            attempt += 1;
+            if (attempt < logoCandidates.length) {
+                img.src = logoCandidates[attempt];
+            } else {
+                img.onerror = null;
+                img.src = 'https://placehold.co/100x100/14532D/FFFFFF?text=GY';
+            }
+        };
+        img.onerror = tryNextLogo;
+        img.src = logoCandidates[0];
+    });
+
+    const prodCandidates = ['images/product.jpg', 'images/product.png', 'images/product.jpeg', 'images/IMG_1168.jpg', 'images/IMG_1168.JPG'];
+    document.querySelectorAll('img[data-product-img]').forEach(img => {
+        let attempt = 0;
+        const tryNextProd = () => {
+            attempt += 1;
+            if (attempt < prodCandidates.length) {
+                img.src = prodCandidates[attempt];
+            } else {
+                img.onerror = null;
+                img.src = 'https://placehold.co/600x450/DCFCE7/14532D?text=GreenYo+65ml';
+            }
+        };
+        img.onerror = tryNextProd;
+        img.src = prodCandidates[0];
+    });
+}
+
+function renderPageContent() {
     const data = window.GREENYO_DATA;
     if (!data) return;
 
-    // 1. Hero Badges
+    // Hero Badges
     const badgeContainer = document.getElementById('hero-badges');
-    if (badgeContainer) {
+    if (badgeContainer && data.brand?.badges) {
         badgeContainer.innerHTML = data.brand.badges.map(b => `
-            <span class="px-3 py-1 bg-white text-[#14532D] text-xs font-bold rounded-lg border border-[#E2E8F0] shadow-sm flex items-center">
-                <i data-lucide="check" class="w-3.5 h-3.5 mr-1.5 text-[#16A34A]"></i> ${b}
+            <span class="px-3.5 py-1.5 bg-white text-[#14532D] text-xs font-bold rounded-xl border border-[#22C55E]/35 shadow-sm inline-flex items-center">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 mr-1.5 text-[#16A34A]"></i> ${b}
             </span>
         `).join('');
     }
 
-    // 2. Traceability 4 Nhóm
-    const traceGrid = document.getElementById('traceability-grid');
-    if (traceGrid) {
-        traceGrid.innerHTML = data.traceability.map(item => `
-            <div class="soft-card rounded-2xl p-6 space-y-3">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-[#F0FDF4] text-[#16A34A] flex items-center justify-center font-bold">
-                        <i data-lucide="${item.icon}" class="w-5 h-5"></i>
+    // Mục 1: Câu chuyện GreenYo
+    if (data.story) {
+        const sBadge = document.getElementById('story-badge');
+        const sHeading = document.getElementById('story-heading');
+        const sParas = document.getElementById('story-paras');
+        if (sBadge) sBadge.textContent = data.story.badge;
+        if (sHeading) sHeading.textContent = data.story.heading;
+        if (sParas) {
+            sParas.innerHTML = data.story.paras.map(p => `<p>${p}</p>`).join('');
+        }
+    }
+
+    // Mục 2: 3 Giá trị hướng đến
+    if (data.values) {
+        const vBadge = document.getElementById('values-badge');
+        const vHeading = document.getElementById('values-heading');
+        const vGrid = document.getElementById('values-grid');
+        if (vBadge) vBadge.textContent = data.values.badge;
+        if (vHeading) vHeading.textContent = data.values.heading;
+        if (vGrid) {
+            vGrid.innerHTML = data.values.items.map((item, idx) => `
+                <div class="soft-card rounded-3xl p-6 sm:p-7 space-y-4 reveal-up delay-${(idx + 1) * 100}">
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-extrabold bg-gradient-to-r from-[#14532D] to-[#22C55E] bg-clip-text text-transparent">${item.num}</span>
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#DCFCE7] to-[#BBF7D0] text-[#14532D] flex items-center justify-center border border-[#22C55E]/30 shadow-sm">
+                            <i data-lucide="${item.icon}" class="w-5 h-5"></i>
+                        </div>
                     </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#16A34A] uppercase">${item.group}</span>
-                        <h3 class="text-lg font-bold text-[#14532D]">${item.title}</h3>
+                    <h3 class="text-xl font-extrabold text-[#14532D]">${item.title}</h3>
+                    <p class="text-sm text-[#475569] leading-relaxed">${item.desc}</p>
+                </div>
+            `).join('');
+        }
+    }
+
+    // Mục 3: Quy trình 6 bước
+    if (data.process) {
+        const pBadge = document.getElementById('process-badge');
+        const pHeading = document.getElementById('process-heading');
+        const pIntro = document.getElementById('process-intro');
+        const pList = document.getElementById('process-steps-list');
+        const pNote = document.getElementById('process-note');
+
+        if (pBadge) pBadge.textContent = data.process.badge;
+        if (pHeading) pHeading.textContent = data.process.heading;
+        if (pIntro) pIntro.textContent = data.process.intro;
+        if (pNote) pNote.textContent = data.process.note;
+
+        if (pList) {
+            pList.innerHTML = data.process.steps.map((st, idx) => `
+                <div class="soft-card rounded-2xl p-5 sm:p-6 reveal-up delay-${(idx % 3 + 1) * 100}">
+                    <div class="flex items-start space-x-4">
+                        <span class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#14532D] to-[#16A34A] text-white text-xs font-extrabold flex-shrink-0 shadow-sm">
+                            BƯỚC ${st.step}
+                        </span>
+                        <div class="space-y-1.5">
+                            <h3 class="text-base sm:text-lg font-extrabold text-[#14532D]">${st.title}</h3>
+                            <p class="text-sm text-[#475569] leading-relaxed">${st.detail}</p>
+                        </div>
                     </div>
                 </div>
-                <p class="text-sm text-[#64748B] leading-relaxed">${item.desc}</p>
+            `).join('');
+        }
+    }
+
+    // Thông số sản phẩm trên product.html
+    const specsList = document.getElementById('product-specs-list');
+    if (specsList && data.productSpecs) {
+        specsList.innerHTML = data.productSpecs.map(sp => `
+            <div class="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#CBD5E1]/70">
+                <span class="text-[11px] font-extrabold uppercase tracking-wide text-[#16A34A] block">${sp.label}</span>
+                <span class="text-xs sm:text-sm font-semibold text-[#0F172A] mt-0.5 block">${sp.value}</span>
             </div>
         `).join('');
     }
 
-    // 3. Story & ESG
-    const storyHeading = document.getElementById('story-heading');
-    const storyParas = document.getElementById('story-paras');
-    if (storyHeading && storyParas) {
-        storyHeading.textContent = data.story.heading;
-        storyParas.innerHTML = data.story.paras.map(p => `<p>${p}</p>`).join('');
-    }
-
-    const esgContainer = document.getElementById('esg-cards');
-    if (esgContainer) {
-        esgContainer.innerHTML = data.story.esg.map((e, idx) => `
-            <div class="soft-card rounded-2xl p-5 flex items-start space-x-4">
-                <div class="w-8 h-8 rounded-lg bg-[#14532D] text-white flex items-center justify-center font-bold flex-shrink-0 text-sm">0${idx+1}</div>
-                <div>
-                    <h4 class="text-base font-bold text-[#14532D]">${e.title}</h4>
-                    <p class="text-xs text-[#64748B] mt-1">${e.desc}</p>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    // 4. Process Accordion (6 Bước)
-    const processAccordion = document.getElementById('process-accordion');
-    if (processAccordion) {
-        processAccordion.innerHTML = data.process.map((p, idx) => `
-            <div class="soft-card rounded-2xl overflow-hidden transition">
-                <button class="accordion-btn w-full px-6 py-4 flex items-center justify-between text-left font-bold text-[#14532D] hover:bg-gray-50 transition">
-                    <div class="flex items-center space-x-4">
-                        <span class="text-sm font-extrabold text-[#16A34A] bg-[#F0FDF4] px-2.5 py-1 rounded-lg border border-[#16A34A]/20">Bước ${p.step}</span>
-                        <span class="text-base sm:text-lg">${p.title}</span>
-                    </div>
-                    <i data-lucide="chevron-down" class="w-5 h-5 text-[#64748B] transition-transform duration-300"></i>
-                </button>
-                <div class="accordion-content hidden px-6 pb-5 text-sm text-[#64748B] border-t border-[#E2E8F0] pt-3 bg-gray-50/50">
-                    ${p.detail}
-                </div>
-            </div>
-        `).join('');
-
-        // Gắn sự kiện đóng mở Accordion
-        document.querySelectorAll('.accordion-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const content = btn.nextElementSibling;
-                const icon = btn.querySelector('i[data-lucide="chevron-down"]');
-                
-                // Đóng các mục khác
-                document.querySelectorAll('.accordion-content').forEach(c => {
-                    if (c !== content) c.classList.add('hidden');
-                });
-
-                content.classList.toggle('hidden');
-                if (icon) {
-                    icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-                }
-            });
-        });
-    }
-
-    // 5. Footer Social Links
     if (data.socials) {
         document.getElementById('link-zalo')?.setAttribute('href', data.socials.zalo);
         document.getElementById('link-fb')?.setAttribute('href', data.socials.facebook);
@@ -110,11 +140,45 @@ function renderContentData() {
     }
 }
 
-// Chọn số sao đánh giá
+function initScrollReveal() {
+    const elements = document.querySelectorAll('.reveal-up');
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    elements.forEach(el => observer.observe(el));
+}
+
+function initAmbientBackgroundTransitions() {
+    const sections = document.querySelectorAll('.ambient-section[data-bg-color]');
+    if (!sections.length) return;
+
+    const bgObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const nextColor = entry.target.getAttribute('data-bg-color');
+                if (nextColor) {
+                    document.body.style.backgroundColor = nextColor;
+                }
+            }
+        });
+    }, { threshold: 0.35 });
+
+    sections.forEach(sec => bgObserver.observe(sec));
+}
+
 function initStarPicker() {
     const stars = document.querySelectorAll('.star-btn');
     const inputVal = document.getElementById('selected-rating');
-    
+    if (!stars.length || !inputVal) return;
+
     stars.forEach((btn, index) => {
         btn.addEventListener('click', () => {
             const rating = index + 1;
@@ -122,9 +186,9 @@ function initStarPicker() {
             stars.forEach((s, sIdx) => {
                 if (sIdx < rating) {
                     s.classList.remove('text-gray-300');
-                    s.classList.add('text-[#D97706]');
+                    s.classList.add('text-[#F59E0B]');
                 } else {
-                    s.classList.remove('text-[#D97706]');
+                    s.classList.remove('text-[#F59E0B]');
                     s.classList.add('text-gray-300');
                 }
             });
@@ -132,7 +196,6 @@ function initStarPicker() {
     });
 }
 
-// Chọn thẻ cảm nhận nhanh (Quick Tags)
 function initTagSelector() {
     const chips = document.querySelectorAll('.tag-chip');
     chips.forEach(chip => {
@@ -140,30 +203,6 @@ function initTagSelector() {
             chip.classList.toggle('bg-[#14532D]');
             chip.classList.toggle('text-white');
             chip.classList.toggle('border-[#14532D]');
-        });
-    });
-}
-
-// Scrollspy làm sáng đèn Navbar khi cuộn trang
-function initScrollspy() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    window.addEventListener('scroll', () => {
-        let scrollY = window.scrollY;
-        sections.forEach(section => {
-            const sectionHeight = section.offsetHeight;
-            const sectionTop = section.offsetTop - 100;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
         });
     });
 }
