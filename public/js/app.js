@@ -85,8 +85,8 @@ function renderPageContent() {
                             <i data-lucide="${item.icon}" class="w-5 h-5"></i>
                         </div>
                     </div>
-                    <h3 class="text-xl font-extrabold text-[#14532D]">${item.title}</h3>
-                    <p class="text-sm text-[#475569] leading-relaxed">${item.desc}</p>
+                    <h3 class="text-lg sm:text-[19px] font-extrabold text-[#14532D]">${item.title}</h3>
+                    <p class="text-[15px] sm:text-[16px] leading-7 text-[#475569] leading-relaxed">${item.desc}</p>
                 </div>
             `).join('');
         }
@@ -113,8 +113,8 @@ function renderPageContent() {
                             BƯỚC ${st.step}
                         </span>
                         <div class="space-y-1.5">
-                            <h3 class="text-base sm:text-lg font-extrabold text-[#14532D]">${st.title}</h3>
-                            <p class="text-sm text-[#475569] leading-relaxed">${st.detail}</p>
+                            <h3 class="text-base sm:text-[18px] font-extrabold text-[#14532D]">${st.title}</h3>
+                            <p class="text-[15px] sm:text-[16px] leading-7 text-[#475569] leading-relaxed">${st.detail}</p>
                         </div>
                     </div>
                 </div>
