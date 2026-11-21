@@ -11,40 +11,43 @@
 </head>
 <body class="bg-[#F4FBF6] text-[#0F172A] antialiased" data-page="product">
 
-    <!-- HEADER ĐỒNG BỘ -->
+    <!-- HEADER ĐỒNG BỘ 2 TẦNG KÍNH MỜ XUYÊN THẤU -->
     <header class="glass-nav sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 sm:h-20">
-                <a href="index.html" class="flex items-center space-x-3 group">
-                    <div class="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full p-0.5 bg-gradient-to-tr from-[#14532D] to-[#22C55E] shadow-md">
+        <!-- Dải thương hiệu nổi bật căn giữa trên cùng -->
+        <div class="brand-topbar py-1.5 px-4 text-center">
+            <a href="index.html" class="inline-flex items-center justify-center space-x-2 text-xs sm:text-sm tracking-tight">
+                <span class="font-extrabold text-[#14532D]">GreenYo</span>
+                <span class="text-[#16A34A] font-bold">•</span>
+                <span class="font-extrabold bg-gradient-to-r from-[#D97706] via-[#B45309] to-[#15803D] bg-clip-text text-transparent">
+                    Sữa chua đậu nành rau
+                </span>
+            </a>
+        </div>
+
+        <!-- Hàng điều hướng chính gọn gàng trên mọi kích thước màn hình -->
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-14 sm:h-16 gap-2">
+                <a href="index.html" class="flex-shrink-0 group" title="Trang chủ GreenYo">
+                    <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-full p-0.5 bg-gradient-to-tr from-[#14532D] to-[#22C55E] shadow-md group-hover:scale-105 transition">
                         <img data-brand-logo src="images/logo.png" alt="Logo GreenYo" class="w-full h-full rounded-full object-cover bg-white">
-                    </div>
-                    <div>
-                        <span class="text-lg sm:text-xl font-extrabold text-[#14532D] tracking-tight block leading-none">GreenYo</span>
-                        <span class="text-[11px] font-semibold text-[#16A34A] hidden sm:block mt-0.5">Đậu nành rau An Giang</span>
                     </div>
                 </a>
 
-                <nav class="flex items-center space-x-1.5 sm:space-x-2">
-                    <a href="index.html" class="nav-tab px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-[#1E293B] hover:bg-[#DCFCE7]/70 hover:text-[#14532D] transition">
+                <nav class="flex items-center space-x-1 sm:space-x-2">
+                    <a href="index.html" class="nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-[#1E293B] hover:bg-[#DCFCE7]/70 hover:text-[#14532D] whitespace-nowrap transition">
                         Giới thiệu
                     </a>
-                    <a href="product.html" class="nav-tab active px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+                    <a href="product.html" class="nav-tab active px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition">
                         Sản phẩm & Đánh giá
                     </a>
-                    <a href="qr.html" target="_blank" class="hidden md:inline-flex items-center space-x-1.5 bg-[#DCFCE7]/80 hover:bg-[#BBF7D0] text-[#14532D] border border-[#16A34A]/30 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+                    <a href="qr.html" target="_blank" class="hidden md:inline-flex items-center space-x-1.5 bg-[#DCFCE7]/85 hover:bg-[#BBF7D0] text-[#14532D] border border-[#16A34A]/30 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition">
                         <i data-lucide="qr-code" class="w-4 h-4 text-[#16A34A]"></i>
                         <span>Mã QR</span>
                     </a>
                 </nav>
 
-                <div class="flex items-center">
-                    <div id="auth-container">
-                        <button id="login-google-btn" class="flex items-center space-x-2 bg-white border border-[#16A34A]/25 hover:border-[#16A34A] px-3 py-2 rounded-xl text-xs font-bold text-[#14532D] shadow-sm transition cursor-pointer">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.14C3.17 21.36 7.28 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.25c-.25-.72-.38-1.49-.38-2.25s.13-1.53.38-2.25V6.61H1.2C.44 8.14 0 9.87 0 11.75s.44 3.61 1.2 5.14l4.08-2.64z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.28 0 3.17 2.64 1.2 6.61l4.08 3.14c.95-2.84 3.6-4.95 6.72-4.95z"/></svg>
-                            <span class="hidden sm:inline">Đăng nhập Google</span>
-                        </button>
-                    </div>
+                <div class="flex items-center flex-shrink-0">
+                    <div id="auth-container"></div>
                 </div>
             </div>
         </div>

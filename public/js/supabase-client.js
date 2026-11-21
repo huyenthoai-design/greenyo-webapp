@@ -37,16 +37,44 @@ function updateAuthState(user) {
     if (!authContainer) return;
 
     if (user) {
-        const userName = user.user_metadata?.full_name || user.email;
+        const userName = user.user_metadata?.full_name || 'Thành viên GreenYo';
+        const userEmail = user.email || '';
         const userAvatar = user.user_metadata?.avatar_url || 'https://placehold.co/40x40/14532D/FFFFFF?text=GY';
 
         authContainer.innerHTML = `
-            <div class="flex items-center space-x-2">
-                <img src="${userAvatar}" alt="Avatar" class="w-8 h-8 rounded-full border border-[#16A34A] object-cover">
-                <span class="hidden lg:inline text-xs font-bold text-[#14532D] max-w-[130px] truncate">${userName}</span>
-                <button id="logout-btn" class="text-xs font-bold text-red-600 hover:underline ml-1 cursor-pointer">Thoát</button>
+            <div class="relative">
+                <button id="avatar-menu-trigger" type="button" aria-label="Tài khoản" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full p-0.5 bg-gradient-to-tr from-[#14532D] to-[#22C55E] shadow-sm hover:scale-105 transition cursor-pointer focus:outline-none">
+                    <img src="${userAvatar}" alt="Avatar" class="w-full h-full rounded-full object-cover bg-white">
+                </button>
+                <div id="avatar-dropdown-menu" class="hidden absolute right-0 mt-2.5 w-60 rounded-2xl bg-white/95 backdrop-blur-xl border border-[#16A34A]/25 shadow-xl p-3.5 z-50 space-y-3">
+                    <div class="flex items-center space-x-2.5 pb-2.5 border-b border-[#E2E8F0]">
+                        <img src="${userAvatar}" alt="Avatar" class="w-9 h-9 rounded-full object-cover border border-[#16A34A]/30">
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-extrabold text-[#14532D] truncate">${userName}</p>
+                            <p class="text-[11px] text-[#64748B] truncate">${userEmail}</p>
+                        </div>
+                    </div>
+                    <button id="logout-btn" type="button" class="w-full flex items-center justify-center space-x-1.5 py-2 px-3 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold transition cursor-pointer">
+                        <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                        <span>Đăng xuất tài khoản</span>
+                    </button>
+                </div>
             </div>
         `;
+
+        const triggerBtn = document.getElementById('avatar-menu-trigger');
+        const dropdownMenu = document.getElementById('avatar-dropdown-menu');
+
+        triggerBtn?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu?.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (dropdownMenu && !dropdownMenu.contains(e.target) && e.target !== triggerBtn) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
 
         document.getElementById('logout-btn')?.addEventListener('click', async () => {
             if (supabaseClient) {
@@ -61,11 +89,13 @@ function updateAuthState(user) {
             document.getElementById('user-avatar-preview').src = userAvatar;
             document.getElementById('user-name-preview').textContent = userName;
         }
+
+        if (window.lucide) lucide.createIcons();
     } else {
         authContainer.innerHTML = `
-            <button id="login-google-btn" class="flex items-center space-x-2 bg-white border border-[#16A34A]/25 hover:border-[#16A34A] px-3 py-2 rounded-xl text-xs font-bold text-[#14532D] shadow-sm transition cursor-pointer">
-                <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.14C3.17 21.36 7.28 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.25c-.25-.72-.38-1.49-.38-2.25s.13-1.53.38-2.25V6.61H1.2C.44 8.14 0 9.87 0 11.75s.44 3.61 1.2 5.14l4.08-2.64z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.28 0 3.17 2.64 1.2 6.61l4.08 3.14c.95-2.84 3.6-4.95 6.72-4.95z"/></svg>
-                <span class="hidden sm:inline">Đăng nhập Google</span>
+            <button id="login-google-btn" class="flex items-center space-x-1.5 bg-white/90 border border-[#16A34A]/30 hover:border-[#16A34A] px-3 py-2 rounded-xl text-xs font-bold text-[#14532D] shadow-sm transition cursor-pointer whitespace-nowrap">
+                <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.95H1.2v3.14C3.17 21.36 7.28 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.25c-.25-.72-.38-1.49-.38-2.25s.13-1.53.38-2.25V6.61H1.2C.44 8.14 0 9.87 0 11.75s.44 3.61 1.2 5.14l4.08-2.64z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.28 0 3.17 2.64 1.2 6.61l4.08 3.14c.95-2.84 3.6-4.95 6.72-4.95z"/></svg>
+                <span class="hidden sm:inline">Đăng nhập</span>
             </button>
         `;
 
