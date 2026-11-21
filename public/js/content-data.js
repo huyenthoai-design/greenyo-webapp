@@ -2,25 +2,25 @@ window.GREENYO_DATA = {
     brand: {
         name: "GreenYo",
         tagline: "Sữa chua lên men từ đậu nành rau vùng lũ An Giang",
-        subtext: "Dự án Khởi nghiệp • Trường THPT Chuyên Thoại Ngọc Hầu, tỉnh An Giang",
+        subtext: "Dự án khởi nghiệp • Trường THPT Chuyên Thoại Ngọc Hầu, tỉnh An Giang",
         price: "8.000 đ",
         volume: "65 ml",
-        badges: ["100% Đậu nành rau An Giang", "Lên men vi sinh thuần khiết", "Không chất bảo quản"]
+        badges: ["Đậu nành rau", "Đường mía", "Lên men vi sinh", "không chất bảo quản"]
     },
     // TRANG GIỚI THIỆU - MỤC 1: CÂU CHUYỆN GREENYO
     story: {
-        badge: "Câu chuyện Khởi nghiệp",
-        heading: "Sống chung với lũ & Nông nghiệp Xanh",
+        badge: "Câu chuyện khởi nghiệp",
+        heading: "Nâng tầm giá trị đậu nành rau qua sản phẩm khởi nghiệp xanh",
         paras: [
-            "Tại vùng đầu nguồn An Giang, mùa nước nổi từ lâu đã trở thành nét đặc trưng trong đời sống và sản xuất của người dân. Nguồn nước, phù sa cùng những lợi thế tự nhiên đã tạo nên bản sắc riêng cho nền nông nghiệp vùng sông nước. Xuất phát từ sự thấu hiểu những tiềm năng và thách thức của nông nghiệp địa phương, nhóm học sinh Trường THPT Chuyên Thoại Ngọc Hầu đã nghiên cứu và phát triển GreenYo – dòng sản phẩm sữa chua thực vật từ hạt đậu nành rau thu hoạch non.",
+            "Giàu dưỡng chất tự nhiên, vị ngọt thanh và dễ tiếp cận với nhiều đối tượng, cây đậu nành rau mở ra hướng đi đầy triển vọng cho việc phát triển thực phẩm lành mạnh. Xuất phát từ mong muốn tạo ra một sản phẩm mới mang tính ứng dụng cao từ nông sản địa phương, nhóm học sinh Trường THPT Chuyên Thoại Ngọc Hầu đã sáng tạo nên GreenYo – sữa chua lên men từ hạt đậu nành rau non, hướng đến lựa chọn dinh dưỡng xanh cho đời sống hiện đại.",
             "Không chỉ hướng đến một sản phẩm có hương vị thanh mát, GreenYo còn mong muốn đa dạng hóa giá trị sử dụng của nông sản, mở rộng cơ hội tiêu thụ nguyên liệu địa phương thông qua chế biến sâu. Từ đó, dự án góp phần khuyến khích tư duy sản xuất sáng tạo, hạn chế phụ thuộc vào các hình thức tiêu thụ nông sản truyền thống.",
-            "Mang tinh thần khởi nghiệp xanh, GreenYo hướng đến phát triển sản phẩm gắn với nông nghiệp bền vững, tiêu dùng có trách nhiệm và dinh dưỡng từ thực vật. Từ một ý tưởng được khơi nguồn tại An Giang, nhóm kỳ vọng sẽ từng bước đưa GreenYo đến gần hơn với người tiêu dùng, đồng thời lan tỏa giá trị nông sản quê hương bằng sự sáng tạo và trách nhiệm với cộng đồng."
+            "Mang tinh thần khởi nghiệp xanh, GreenYo hướng đến phát triển sản phẩm gắn với nông nghiệp bền vững, nhóm kỳ vọng sẽ từng bước đưa GreenYo đến gần hơn với người tiêu dùng, đồng thời lan tỏa giá trị nông sản quê hương bằng sự sáng tạo và trách nhiệm với cộng đồng."
         ]
     },
     // TRANG GIỚI THIỆU - MỤC 2: 3 GIÁ TRỊ GREENYO HƯỚNG ĐẾN
     values: {
-        badge: "Định hướng Phát triển Bền vững",
-        heading: "Giá trị GreenYo Hướng đến",
+        badge: "Định hướng phát triển bền vững",
+        heading: "Giá trị GreenYo hướng đến",
         items: [
             {
                 num: "01",
@@ -45,7 +45,7 @@ window.GREENYO_DATA = {
     // TRANG GIỚI THIỆU - MỤC 3: QUY TRÌNH CHẾ BIẾN SẠCH 6 BƯỚC
     process: {
         badge: "Khoa học & Kỹ thuật",
-        heading: "Quy trình Chế biến Sạch 6 Bước",
+        heading: "Quy trình chế biến sạch 6 Bước",
         intro: "GreenYo áp dụng quy trình chế biến gồm 6 công đoạn được thực hiện tuần tự và kiểm soát chặt chẽ. Mỗi bước đảm nhận một vai trò riêng, từ tuyển chọn nguyên liệu, sơ chế đến chế biến và hoàn thiện sản phẩm, góp phần đảm bảo chất lượng và tính đồng nhất của thành phẩm.",
         note: "Lưu ý kỹ thuật: Các thông số như tỷ lệ baking soda, thời gian chần, thời gian thanh trùng, nhiệt độ và thời gian ủ men cần được đối chiếu với quy trình sản xuất thực tế và kết quả kiểm nghiệm trước khi công bố chính thức.",
         steps: [
